@@ -5,11 +5,11 @@
     */
 
     require_once "src/Store.php";
-    //
-    // $server = 'mysql:host=localhost:8889;dbname=shoestar_test';
-    // $username = 'root';
-    // $password = 'root';
-    // $DB = new PDO($server, $username, $password);
+
+    $server = 'mysql:host=localhost:8889;dbname=shoestar_test';
+    $username = 'root';
+    $password = 'root';
+    $DB = new PDO($server, $username, $password);
 
     class StoreTest extends PHPUnit_Framework_TestCase
     {
@@ -57,6 +57,17 @@
             $result = $new_store->getLocation();
 
             $this->assertEquals($new_location, $result);
+        }
+
+        function testSave()
+        {
+            $name = "The Doram Shoe";
+            $location = "Newberg";
+            $new_store = new Store($name, $location);
+
+            $result = $new_store->save();
+
+            $this->assertTrue($result, "Store save attempt unsuccessful");
         }
     }
 ?>
