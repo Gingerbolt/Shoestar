@@ -162,5 +162,20 @@
 
             $this->assertEquals($new_location, $result);
         }
+
+        function testDelete()
+        {
+            $name = "Ravenclaw";
+            $new_store = new Store($name);
+            $new_store->save();
+            $name_2 = "Shmaegel Shoe";
+            $new_store_2 = new Store($name_2);
+            $new_store_2->save();
+
+            $new_store->delete();
+            $result = Store::getAll();
+
+            $this->assertEquals([$new_store_2], $result);
+        }
     }
 ?>
