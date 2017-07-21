@@ -66,5 +66,44 @@
           }
           return $stores;
         }
+
+        static function find($search_id)
+        {
+            $new_store = null;
+            $returned_stores = $GLOBALS['DB']->prepare("SELECT * FROM stores WHERE id = :id;");
+            $returned_stores->bindParam(':id', $search_id, PDO::PARAM_STR);
+            $returned_stores->execute();
+            foreach ($returned_stores as $store) {
+                $name = $store['name'];
+                $location = $store['location'];
+                $id = $store['id'];
+                if ($id == $search_id) {
+                    $new_store = new Store($name, $location, $id);
+                }
+            }
+            return $new_store;
+        }
+
+        function updateName($_new_name)
+        {
+            $executed = $GLOBALS['DB']->exec("UPDATE stores SET name = '{$_new_name}' WHERE id = {$this->getId()};");
+            if ($executed) {
+                $this->setName($_new_name);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function updateLocation($_new_location)
+        {
+            $executed = $GLOBALS['DB']->exec("UPDATE stores SET location = '{$_new_location}' WHERE id = {$this->getId()};");
+            if ($executed) {
+                $this->setLocation($_new_location);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 ?>

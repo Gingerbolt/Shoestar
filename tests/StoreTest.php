@@ -116,5 +116,34 @@
 
             $this->assertEquals([$new_store, $new_store_2], $result);
         }
+
+        function testFind()
+        {
+            $name = "Store 1";
+            $new_store = new Store($name);
+            $new_store->save();
+            $name_2 = "Store 2";
+            $new_store_2 = new Store($name_2);
+            $new_store_2->save();
+            $store_id = $new_store->getId();
+
+            $result= Store::find($store_id);
+
+            $this->assertEquals($new_store, $result);
+        }
+        //
+        // function testUpdateName()
+        // {
+        //     $name = "Rathos Shoes";
+        //     $new_store = new Store($name);
+        //     $new_store->save();
+        //     $new_name = "Zapatoses";
+        //     $new_store->updateName($new_name);
+        // }
+        //
+        // function testUpdateLocation()
+        // {
+        //
+        // }
     }
 ?>
