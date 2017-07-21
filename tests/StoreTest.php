@@ -5,7 +5,7 @@
     */
 
     require_once "src/Store.php";
-    // 
+    //
     // $server = 'mysql:host=localhost:8889;dbname=shoestar_test';
     // $username = 'root';
     // $password = 'root';
@@ -33,6 +33,30 @@
             $result = $new_store->getName();
 
             $this->assertEquals($new_name, $result);
+        }
+
+        function testGetLocation()
+        {
+            $name = "The Shoeore";
+            $location = "Portland";
+            $new_store = new Store($name, $location);
+
+            $result = $new_store->getLocation();
+
+            $this->assertEquals($location, $result);
+        }
+
+        function testSetLocation()
+        {
+            $name = "The Shoe Store Stross the Way";
+            $location = "Newberg";
+            $new_store = new Store($name, $location);
+            $new_location = "Border's Shoes on Ice";
+
+            $new_store->setLocation($new_location);
+            $result = $new_store->getLocation();
+
+            $this->assertEquals($new_location, $result);
         }
     }
 ?>
