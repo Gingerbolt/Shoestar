@@ -131,19 +131,36 @@
 
             $this->assertEquals($new_store, $result);
         }
-        //
-        // function testUpdateName()
-        // {
-        //     $name = "Rathos Shoes";
-        //     $new_store = new Store($name);
-        //     $new_store->save();
-        //     $new_name = "Zapatoses";
-        //     $new_store->updateName($new_name);
-        // }
-        //
-        // function testUpdateLocation()
-        // {
-        //
-        // }
+
+        function testUpdateName()
+        {
+            $name = "Rathos Shoes";
+            $new_store = new Store($name);
+            $new_store->save();
+            $new_name = "Zapatoses";
+            $store_id = $new_store->getId();
+
+            $new_store->updateName($new_name);
+            $found_store = Store::find($store_id);
+            $result = $found_store->getName();
+
+            $this->assertEquals($new_name, $result);
+        }
+
+        function testUpdateLocation()
+        {
+            $name = "Hufflepuff";
+            $location = "Hogwarts";
+            $new_store = new Store($name, $location);
+            $new_store->save();
+            $new_location = "London";
+            $store_id = $new_store->getId();
+
+            $new_store->updateLocation($new_location);
+            $found_store = Store::find($store_id);
+            $result = $found_store->getLocation();
+
+            $this->assertEquals($new_location, $result);
+        }
     }
 ?>
