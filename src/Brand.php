@@ -110,5 +110,15 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
         }
+
+        function setStore($_store_id)
+        {
+            $executed = $GLOBALS['DB']->exec("INSERT INTO market_penetration (store_id, brand_id) VALUES ('{$_store_id}', '{$this->getId()}');");
+            if ($executed) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 ?>

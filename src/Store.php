@@ -1,4 +1,7 @@
 <?php
+
+    require_once "src/Brand.php";
+
     class Store
     {
         private $name;
@@ -109,6 +112,31 @@
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
+        }
+
+        function getBrands()
+        {
+            $returned_brands = $GLOBALS['DB']->query("SELECT brands.* FROM stores AS s JOIN market_penetration AS m ON (s.id = m.store_id) JOIN brands AS b ON (m.brand_id = b.id) WHERE store_id == {$this->getId()};");
+            $brands = array();
+            var_dump($returned_brands);
+            foreach($returned_brands as $brand) {
+                $name = $brand['name'];
+                $price_range = $brand['price_range'];
+                $id = $brand['id'];
+                $new_brand = new Brand($name, $price_range, $id);
+                array_push($brands, $new_brand);
+            }
+            return $brands;
+        }
+
+        function setBrand($new_brand_id)
+        {
+            $executed = $GLOBALS['DB']->exec("INSERT INTO market_penetration (store_id, brand_id) VALUES ({$this->getId()}, {$new_brand_id});");
+            if ($executed) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 ?>

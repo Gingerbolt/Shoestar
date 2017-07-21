@@ -4,6 +4,7 @@
     * @backupStaticAttributes disabled
     */
 
+    require_once "src/Brand.php";
     require_once "src/Store.php";
 
     $server = 'mysql:host=localhost:8889;dbname=shoestar_test';
@@ -16,6 +17,8 @@
         protected function tearDown()
         {
             Store::deleteAll();
+            Brand::deleteAll();
+            $GLOBALS['DB']->exec("DELETE FROM market_penetration;");
         }
         function testGetName()
         {
@@ -76,14 +79,14 @@
 
         function testGetId()
         {
-            $name_id = "Callus Shoes";
-            $location_id = "Lametown";
-            $id_id = 1;
-            $new_store_id = new Store($name_id, $location_id, $id_id);
+            $name = "Callus Shoes";
+            $location = "Lametown";
+            $new_store = new Store($name, $location);
+            $new_store->save();
 
-            $result_id = $new_store_id->getId();
+            $result = $new_store->getId();
 
-            $this->assertEquals($id_id, $result_id);
+            $this->assertTrue(is_numeric($result));
         }
 
         function testDeleteAll()
@@ -176,6 +179,24 @@
             $result = Store::getAll();
 
             $this->assertEquals([$new_store_2], $result);
+        }
+
+        function testGetBrands()
+        {
+            $name = "The content";
+            $new_store = new Store($name);
+            $new_store->save();
+
+            $brand_name = "fransisco's";
+            $price_range = 2;
+            $new_brand = new Brand($brand_name, $price_range);
+            $new_brand->save();
+            var_dump($new_brand->getId());
+
+            $new_store->setBrand($new_brand->getId());
+            $result = $new_store->getBrands();
+
+            $this->assertEquals([$new_brand], $result);
         }
     }
 ?>
