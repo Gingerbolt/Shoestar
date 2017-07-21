@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>College</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+    <body>
+        <h1>Welcome to Shoestar!</h1>
+
+        {% if stores is not empty %}
+            <p>Known Stores:</p>
+            <ul>
+                {% for store in stores %}
+                    <li><a href="/store/{{ store.getId }}">{{ store.getName }}</a></li>
+                    <form name="store_delete{{ store.getId }}" action='/{{ store.getId }}/delete' method='post'>
+                        <button name="store_delete{{ store.getId }}" type='submit'>Delete Store</button>
+                    </form>
+                {% endfor %}
+            </ul>
+        {% else %}
+          <p>No stores known, add some!</p>
+        {% endif %}
+
+        <p>Track a new store:</p>
+
+        <form name="store_post" action="/" method="post">
+            <label for="name">Store name:</label>
+            <input id="name" name="name" type="text" required>
+            <label for="location">Store location:</label>
+            <input id="location" name="location" type="text">
+
+            <button name="store_post" type="submit">Add store</button>
+        </form>
+
+    </body>
+</html>
