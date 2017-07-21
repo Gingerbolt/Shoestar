@@ -69,5 +69,17 @@
 
             $this->assertTrue($result, "Store save attempt unsuccessful");
         }
+
+        function testGetId()
+        {
+            $name_id = "Callus Shoes";
+            $location_id = "Lametown";
+            $id_id = 1;
+            $new_store_id = new Store($name_id, $location_id, $id_id);
+
+            $result_id = $new_store_id->getId();
+
+            $this->assertEquals($id_id, $result_id);
+        }
     }
 ?>
