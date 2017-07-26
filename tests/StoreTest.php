@@ -20,6 +20,7 @@
             Brand::deleteAll();
             $GLOBALS['DB']->exec("DELETE FROM market_penetration;");
         }
+
         function testGetName()
         {
             $name = "The Shoe Store";
@@ -187,13 +188,12 @@
             $new_store = new Store($name);
             $new_store->save();
 
-            $brand_name = "fransisco's";
+            $brand_name = "fransiscos";
             $price_range = 2;
             $new_brand = new Brand($brand_name, $price_range);
             $new_brand->save();
-            var_dump($new_brand->getId());
 
-            $new_store->setBrand($new_brand->getId());
+            $new_store->setBrand($new_brand);
             $result = $new_store->getBrands();
 
             $this->assertEquals([$new_brand], $result);

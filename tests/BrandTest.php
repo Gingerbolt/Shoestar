@@ -15,8 +15,11 @@
     {
         protected function tearDown()
         {
+            Store::deleteAll();
             Brand::deleteAll();
+            $GLOBALS['DB']->exec("DELETE FROM market_penetration;");
         }
+
         function testGetName()
         {
             $name = "The Shoe Brand";

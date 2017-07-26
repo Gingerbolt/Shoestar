@@ -116,9 +116,8 @@
 
         function getBrands()
         {
-            $returned_brands = $GLOBALS['DB']->query("SELECT brands.* FROM stores AS s JOIN market_penetration AS m ON (s.id = m.store_id) JOIN brands AS b ON (m.brand_id = b.id) WHERE store_id == {$this->getId()};");
+            $returned_brands = $GLOBALS['DB']->query("SELECT brands.* FROM stores JOIN market_penetration ON (market_penetration.store_id = stores.id) JOIN brands ON (brands.id = market_penetration.brand_id) WHERE stores.id = {$this->getID()};");
             $brands = array();
-            var_dump($returned_brands);
             foreach($returned_brands as $brand) {
                 $name = $brand['name'];
                 $price_range = $brand['price_range'];
@@ -129,9 +128,9 @@
             return $brands;
         }
 
-        function setBrand($new_brand_id)
+        function setBrand($new_brand)
         {
-            $executed = $GLOBALS['DB']->exec("INSERT INTO market_penetration (store_id, brand_id) VALUES ({$this->getId()}, {$new_brand_id});");
+            $executed = $GLOBALS['DB']->exec("INSERT INTO market_penetration (store_id, brand_id) VALUES ({$this->getId()}, {$new_brand->getId()})");
             if ($executed) {
                 return true;
             } else {

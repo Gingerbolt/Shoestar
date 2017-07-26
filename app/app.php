@@ -14,9 +14,14 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
+    use Symfony\Component\Debug\Debug;
+    Debug::enable();
+
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
+
+    $app['debug'] = true;
 
     $app->get("/", function() use ($app) {
         return $app['twig']->render('index.html.twig', array('stores' => Store::getAll()));
@@ -30,9 +35,5 @@
         return $app['twig']->render('index.html.twig', array('stores' => Store::getAll()));
     });
 
-    // $app->get("/store/{id}", function($id) use ($app) {
-    //
-    //     return $app['twig']->render('store.html.twig', array('brands' => ))
-    // });
     return $app;
 ?>
