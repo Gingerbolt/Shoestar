@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>College</title>
+</head>
+    <body>
+        {% if store is not empty %}
+            <h1>{{store.getName}}:</h1>
+            <ul>
+                {% for brand in brands %}
+                    <li>{{ brand.getName }}</li>
+                    <li>{{ brand.getPriceRange }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+          <p>No brands known here, add some!</p>
+        {% endif %}
+
+        <p>Track a new brand:</p>
+
+        <form action="/brand_post" method="post">
+            <label for="name">Brand name:</label>
+            <input id="name" name="name" type="text" required>
+            <label for="price_range">Price range:</label>
+            <select name="price_range">
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+            </select>
+
+            <button type="submit">Add brand</button>
+        </form>
+
+        <p>Add an existing brand</p>
+        <form action="/brand_post" method="post">
+        <input type='hidden' name="store_id" value='{{store.getId}}'>
+            <select name ='brand_add'>
+                {% for all_brand in all_brands %}
+                <option value={{ all_brand.getId }}>{{ all_brand.getName }}</option>
+            </select>
+            <button type="submit">
+        </form>
+
+    </body>
+</html>

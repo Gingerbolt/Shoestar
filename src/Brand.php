@@ -108,7 +108,13 @@
 
         function delete()
         {
-            $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+            $executed = $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+            if(!$executed)
+            {
+              return false;
+            } else {
+              $GLOBALS['DB']->exec("DELETE FROM market_penetration WHERE brand_id = {$this->getId()};");
+            }
         }
 
         function setStore($_store_id)
