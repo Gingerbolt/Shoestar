@@ -56,13 +56,16 @@
         }
         else
         {
+        $store_id = $_POST['store_id'];
         $name = ucfirst($_POST['name']);
         $price_range = $_POST['price_range'];
         $new_brand = new Brand($name, $price_range);
         $new_brand->save();
         $new_brand->setStore($store_id);
         }
-        return $app['twig']->render('store.html.twig', array('store' => $current_store, 'brands' => $current_store->getBrands(), 'all_brands' => Brand::getAll()));
+        $current_store = Store::find($store_id);
+        $brands = $current_store->getBrands();
+        return $app['twig']->render('store.html.twig', array('store' => $current_store, 'brands' => $brands, 'all_brands' => Brand::getAll()));
     });
 
     return $app;

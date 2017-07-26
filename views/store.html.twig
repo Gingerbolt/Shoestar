@@ -8,7 +8,7 @@
             <ul>
                 {% for brand in brands %}
                     <li>{{ brand.getName }}</li>
-                    <li>{{ brand.getPriceRange }}</li>
+                    <li>Price Range (1-5){{ brand.getPriceRange }}</li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -28,7 +28,7 @@
                 <option value='4'>4</option>
                 <option value='5'>5</option>
             </select>
-
+            <input type='hidden' id="store_id" name="store_id" value='{{store.getId}}'>
             <button type="submit">Add brand</button>
         </form>
 
@@ -37,9 +37,10 @@
         <input type='hidden' name="store_id" value='{{store.getId}}'>
             <select name ='brand_add'>
                 {% for all_brand in all_brands %}
-                <option value={{ all_brand.getId }}>{{ all_brand.getName }}</option>
+                <option value='{{ all_brand.getId }}'>{{ all_brand.getName }}</option>
+                {% endfor %}
             </select>
-            <button type="submit">
+            <button type="submit"> Add selected brand </button>
         </form>
         <a href='/'>Return to stores</a>
     </body>
